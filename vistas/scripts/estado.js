@@ -98,27 +98,26 @@ function guardaryeditar(e)
 	limpiar();
 }
 
-function mostrar(idestado)
+function mostrar(txtidestado)
 {
-	$.post("../ajax/estado.php?op=mostrar",{idestado : idestado}, function(data, status)
+	$.post("../ajax/estado.php?op=mostrar",{txtidestado : txtidestado}, function(data, status)
 	{
 		data = JSON.parse(data);		
 		mostrarform(true);
 
-		$("#nombre").val(data.nombre);
-		$("#descripcion").val(data.descripcion);
- 		$("#idcategoria").val(data.idcategoria);
+		$("#txtidestado").val(data.idestado);
+		$("#txtestado").val(data.estado);
 
  	})
 }
 
 //Función para desactivar registros
-function desactivar(idestado)
+function desactivar(txtidestado)
 {
-	bootbox.confirm("¿Está Seguro de desactivar la Categoría?", function(result){
+	bootbox.confirm("¿Está Seguro de desactivar el estado?", function(result){
 		if(result)
         {
-        	$.post("../ajax/categoria.php?op=desactivar", {idcategoria : idcategoria}, function(e){
+        	$.post("../ajax/estado.php?op=desactivar", {txtidestado : txtidestado}, function(e){
         		bootbox.alert(e);
 	            tabla.ajax.reload();
         	});	
@@ -127,18 +126,17 @@ function desactivar(idestado)
 }
 
 //Función para activar registros
-function activar(idestado)
+function activar(txtidestado)
 {
-	bootbox.confirm("¿Está Seguro de activar la Categoría?", function(result){
+	bootbox.confirm("¿Está Seguro de activar el estado?", function(result){
 		if(result)
         {
-        	$.post("../ajax/categoria.php?op=activar", {idcategoria : idcategoria}, function(e){
+        	$.post("../ajax/estado.php?op=activar", {txtidestado : txtidestado}, function(e){
         		bootbox.alert(e);
 	            tabla.ajax.reload();
         	});	
         }
 	})
 }
-
 
 init();
