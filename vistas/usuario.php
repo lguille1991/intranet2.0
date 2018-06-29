@@ -35,8 +35,14 @@ require 'header.php';
                         </tbody>
                         <tfoot>
                           <th>Opciones</th>
-                          <th>Nombre estado</th>
-                          <th>Habilitado/Deshabilitado</th> 
+                          <th>Nombre</th>
+                          <th>DUI</th>
+                          <th>NIT</th>
+                          <th>Email</th>
+                          <th>Login</th>
+                          <th>Clave</th>
+                          <th>Imagen</th>
+                          <th>Habilitado/Deshabilitado</th>
                         </tfoot>
                       </table>    
                     </div>
@@ -63,4 +69,4 @@ require 'header.php';
   <?php
 require 'footer.php';
 ?>
-<script src="scripts/estado.js"></script>
+<script src="scripts/usuario.js"></script>
