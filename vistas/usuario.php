@@ -44,7 +44,7 @@ require 'header.php';
                         </tfoot>
                       </table>    
                     </div>
-                    <div class="panel-body" style="height: 400px;" id="formularioRegistros">
+                    <div class="panel-body" style="height: 500px;" id="formularioRegistros">
                       <form action="" name="formulario" id="formulario" method="POST">
                         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                           <label>Nombre:</label>
@@ -72,12 +72,17 @@ require 'header.php';
                           <input type="password" class="form-control" name="txtclave" id="txtclave" maxlength="64" placeholder="Contraseña" required>
                         </div>
                         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <label>Permisos:</label>
+                          <ul style="list-style: none" id="permisos">
+                          </ul>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                           <label>Imagen de perfil:</label>
                           <input type="file" class="form-control" name="txtimagen" id="txtimagen">
                           <input type="hidden" class="form-control" name="imagenactual" id="imagenactual">
-                          <img src="" width="150px" height="120px" name="imagenmuestra" id="imagenmuestra">
+                          <img src="" width="150px" height="120px" id="imagenmuestra">
                         </div>
-                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                           <button type="submit" class="btn btn-primary" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
                           <button type="button" class="btn btn-danger" onclick="cancelarform()"><i class="fa fa-arrow-circle-left"></i> Cancelar</button> 
                         </div>

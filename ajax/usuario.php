@@ -31,12 +31,12 @@ switch ($_GET["op"]){
 		$clavehash=hash("SHA256",$txtclave);
 
 		if (empty($txtidusuario)){
-			$rspta=$usuario->insertar($txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$clavehash,$txtimagen);
-			echo $rspta ? "Usuario registrado" : "Usuario no se pudo registrar";
+			$rspta=$usuario->insertar($txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$clavehash,$txtimagen,$_POST['permiso']);
+			echo $rspta ? "Usuario registrado" : "No se pudieron registrar todos los datos del usuario";
 		}
 		else {
-			$rspta=$usuario->editar($txtidusuario,$txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$clavehash,$txtimagen);
-			echo $rspta ? "Usuario actualizado" : "Usuario no se pudo actualizar";
+			$rspta=$usuario->editar($txtidusuario,$txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$clavehash,$txtimagen,$_POST['permiso']);
+			echo $rspta ? "Usuario actualizado" : "No se pudieron actualizar todos los datos del usuario";
 		}
 	break;
 
@@ -84,6 +84,28 @@ switch ($_GET["op"]){
  			"aaData"=>$data);
  		echo json_encode($results);
 
+	break;
+
+	case 'permisos':
+		//Obtenemos todos los permisos de la tabla permisos (insert)
+		require_once "../modelos/Permiso.php";
+		$permiso = new Permiso();
+		$rspta = $permiso->listar();
+
+		//Obtener los permisos asignados al usuario (update)
+		$id=$_GET['id'];
+		$marcados=$usuario->listarmarcados($id);
+		$valores=array();
+
+		//Almacena los permisos asignados al usuario en el array
+		while($per=$marcados->fetch_object()){
+			array_push($valores,$per->idpermiso);
+		}
+
+		while($reg = $rspta->fetch_object()){
+			$sw=in_array($reg->idpermiso,$valores)?'checked':'';
+			echo '<li> <input type="checkbox" '.$sw.' name="permiso[]" value="'.$reg->idpermiso.'"> '.$reg->nombre.'</li>';
+		}
 	break;
 }
 ?>

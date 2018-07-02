@@ -9,7 +9,11 @@ function init(){
 	{
 		guardaryeditar(e);	
     })
-    $("#imagenmuestra").hide();
+	$("#imagenmuestra").hide();
+	//Mostramos los permisos
+	$.post("../ajax/usuario.php?op=permisos&id=",function(r){
+		$("#permisos").html(r);
+	});
 }
 
 //Función limpiar
@@ -124,7 +128,10 @@ function mostrar(txtidusuario)
 		$("#imagenmuestra").attr("src","../files/usuarios/"+data.imagen);
 		$("#imagenactual").val(data.imagen);
 
- 	})
+	 });
+	 $.post("../ajax/usuario.php?op=permisos&id="+txtidusuario,function(r){
+		$("#permisos").html(r);
+	});
 }
 
 //Función para desactivar registros

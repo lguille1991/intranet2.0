@@ -11,19 +11,45 @@ Class Usuario
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$txtclave,$txtimagen)
+	public function insertar($txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$txtclave,$txtimagen,$permisos)
 	{
 		$sql="INSERT INTO usuario (nombre,dui,nit,email,login,clave,imagen,condicion)
 		VALUES ('$txtnombre','$txtdui','$txtnit','$txtemail','$txtlogin','$txtclave','$txtimagen','1')";
-		return ejecutarConsulta($sql);
+		$idusuarionew=ejecutarConsulta_retornarID($sql);
+
+		$num_elementos=0;
+		$sw=true;
+
+		while($num_elementos<count($permisos)){
+			$sql_detalle="INSERT INTO usuario_permiso(idusuario,idpermiso) VALUES
+			('$idusuarionew','$permisos[$num_elementos]')";
+			ejecutarConsulta($sql_detalle) or $sw=false;
+			$num_elementos=$num_elementos+1;
+		}
+		return $sw;
 	}
 
 	//Implementamos un método para editar registros
-	public function editar($txtidusuario,$txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$txtclave,$txtimagen)
+	public function editar($txtidusuario,$txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$txtclave,$txtimagen,$permisos)
 	{
 		$sql="UPDATE usuario SET nombre='$txtnombre',dui='$txtdui',nit='$txtnit',email='$txtemail',
         login='$txtlogin',clave='$txtclave',imagen='$txtimagen' WHERE idusuario='$txtidusuario'";
-		return ejecutarConsulta($sql);
+		ejecutarConsulta($sql);
+
+		//Eliminamos todos los permisos asignados para volverlos a registrar
+		$sqldel="DELETE FROM usuario_permiso WHERE idusuario='$txtidusuario'";
+		ejecutarConsulta($sqldel);
+
+		$num_elementos=0;
+		$sw=true;
+
+		while($num_elementos<count($permisos)){
+			$sql_detalle="INSERT INTO usuario_permiso(idusuario,idpermiso) VALUES
+			('$txtidusuario','$permisos[$num_elementos]')";
+			ejecutarConsulta($sql_detalle) or $sw=false;
+			$num_elementos=$num_elementos+1;
+		}
+		return $sw;
 	}
 
 	//Implementamos un método para desactivar categorías
@@ -52,6 +78,11 @@ Class Usuario
 	{
 		$sql="SELECT * FROM usuario";
 		return ejecutarConsulta($sql);		
+	}
+
+	public function listarmarcados($idusuario){
+		$sql="SELECT * FROM usuario_permiso WHERE idusuario='$idusuario'";
+		return ejecutarConsulta($sql);
 	}
 }
 
