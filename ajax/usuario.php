@@ -15,23 +15,27 @@ $txtimagen=isset($_POST["txtimagen"])? limpiarCadena($_POST["txtimagen"]):"";
 
 switch ($_GET["op"]){
     case 'guardaryeditar':
-        if(!file_exists($_FILES['imagen']['tmp_name']) || !is_uploaded_file($_FILES['imagen']['tmp_name'])){
-            $imagen=$_POST['txtimagen'];
+        if(!file_exists($_FILES['txtimagen']['tmp_name']) || !is_uploaded_file($_FILES['txtimagen']['tmp_name'])){
+            $txtimagen=$_POST['imagenactual'];
         }
         else{
-            $ext=explode(".",$_FILES["imagen"]["name"]);
-            if($_FILES['imagen']['type']== "image/jpg" || $_FILES['imagen']['type']== "image/jpeg" || 
-            $_FILES['imagen']['type']== "image/png"){
-                $imagen=round(microtime(true)).'.'.end($ext);
-                move_uploaded_file($_FILE["imagen"]["tmp_name"],"../files/usuarios/".$imagen);
+            $ext=explode(".",$_FILES["txtimagen"]["name"]);
+            if($_FILES['txtimagen']['type']== "image/jpg" || $_FILES['txtimagen']['type']== "image/jpeg" || 
+            $_FILES['txtimagen']['type']== "image/png"){
+                $txtimagen=round(microtime(true)).'.'.end($ext);
+                move_uploaded_file($_FILES["txtimagen"]["tmp_name"],"../files/usuarios/".$txtimagen);
             }
-        }
+		}
+		
+		//Hasg SHA256 en la contraseña
+		$clavehash=hash("SHA256",$txtclave);
+
 		if (empty($txtidusuario)){
-			$rspta=$usuario->insertar($txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$txtclave,$txtimagen);
+			$rspta=$usuario->insertar($txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$clavehash,$txtimagen);
 			echo $rspta ? "Usuario registrado" : "Usuario no se pudo registrar";
 		}
 		else {
-			$rspta=$usuario->editar($txtidusuario,$txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$txtclave,$txtimagen);
+			$rspta=$usuario->editar($txtidusuario,$txtnombre,$txtdui,$txtnit,$txtemail,$txtlogin,$clavehash,$txtimagen);
 			echo $rspta ? "Usuario actualizado" : "Usuario no se pudo actualizar";
 		}
 	break;
@@ -43,7 +47,7 @@ switch ($_GET["op"]){
 
 	case 'activar':
 		$rspta=$usuario->activar($txtidusuario);
- 		echo $rspta ? "Usuario activada" : "Usuario no se puede activar";
+ 		echo $rspta ? "Usuario activado" : "Usuario no se puede activar";
 	break;
 
 	case 'mostrar':
@@ -68,9 +72,8 @@ switch ($_GET["op"]){
                 "3"=>$reg->nit,
                 "4"=>$reg->email,
                 "5"=>$reg->login,
-                "6"=>$reg->clave,
-                "7"=>$reg->imagen,
- 				"8"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
+                "6"=>"<img src='../files/usuarios/".$reg->imagen."' height='50px' width='50px'>",
+ 				"7"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
  				'<span class="label bg-red">Desactivado</span>'
  				);
  		}

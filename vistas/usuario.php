@@ -26,7 +26,6 @@ require 'header.php';
                           <th>NIT</th>
                           <th>Email</th>
                           <th>Login</th>
-                          <th>Clave</th>
                           <th>Imagen</th>
                           <th>Habilitado/Deshabilitado</th>    
                         </thead>
@@ -40,7 +39,6 @@ require 'header.php';
                           <th>NIT</th>
                           <th>Email</th>
                           <th>Login</th>
-                          <th>Clave</th>
                           <th>Imagen</th>
                           <th>Habilitado/Deshabilitado</th>
                         </tfoot>
@@ -50,11 +48,38 @@ require 'header.php';
                       <form action="" name="formulario" id="formulario" method="POST">
                         <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                           <label>Nombre:</label>
-                          <input type="hidden" name="txtidestado" id="txtidestado">
-                          <input type="text" class="form-control" name="txtestado" id="txtestado" maxlength="50" placeholder="Nombre estado" required>
-                          <br>
+                          <input type="hidden" name="txtidusuario" id="txtidusuario">
+                          <input type="text" class="form-control" name="txtnombre" id="txtnombre" maxlength="50" placeholder="Nombre empleado" required>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <label>DUI:</label>
+                          <input type="text" class="form-control" name="txtdui" id="txtdui" maxlength="11" placeholder="DUI" required>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <label>NIT:</label>
+                          <input type="text" class="form-control" name="txtnit" id="txtnit" maxlength="20" placeholder="NIT" required>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <label>Email:</label>
+                          <input type="email" class="form-control" name="txtemail" id="txtemail" maxlength="50" placeholder="Email" required>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <label>Nombre de usuario (login):</label>
+                          <input type="text" class="form-control" name="txtlogin" id="txtlogin" maxlength="50" placeholder="Nombre de usuario" required>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <label>Contraseña:</label>
+                          <input type="password" class="form-control" name="txtclave" id="txtclave" maxlength="64" placeholder="Contraseña" required>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <label>Imagen de perfil:</label>
+                          <input type="file" class="form-control" name="txtimagen" id="txtimagen">
+                          <input type="hidden" class="form-control" name="imagenactual" id="imagenactual">
+                          <img src="" width="150px" height="120px" name="imagenmuestra" id="imagenmuestra">
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                           <button type="submit" class="btn btn-primary" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                          <button type="button" class="btn btn-danger" onclick="cancelarform()"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+                          <button type="button" class="btn btn-danger" onclick="cancelarform()"><i class="fa fa-arrow-circle-left"></i> Cancelar</button> 
                         </div>
                       </form>  
                     </div>

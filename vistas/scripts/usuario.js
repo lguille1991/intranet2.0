@@ -121,8 +121,8 @@ function mostrar(txtidusuario)
         $("#txtlogin").val(data.login);
         $("#txtclave").val(data.clave);
         $("#imagenmuestra").show();
-        $("#imagenmuestra").attr("src","..files/usuarios/"+data.imagen);
-        $("#txtimagen").val(data.imagen);
+		$("#imagenmuestra").attr("src","../files/usuarios/"+data.imagen);
+		$("#imagenactual").val(data.imagen);
 
  	})
 }
